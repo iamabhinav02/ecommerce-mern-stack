@@ -27,23 +27,20 @@ exports.signup = async (req, res) => {
 exports.login = async (req, res) => {
 	try {
 		const { email, password } = req.body;
-		let user = await db.User.findOne({ email });
+		let user = await db.User.findOne({ email }).select("-password");
 		if (!user) throw Error("Invalid email/password combination");
 		const result = user.comparePassword(password);
 		if (result && user.role === "admin") {
-			const token = jwt.sign({ _id: user._id }, process.env.JWT, {
-				expiresIn: "1h",
-			});
-			return res.status(200).json({ message: "Admin login successful" });
+			const token = jwt.sign(
+				{ _id: user._id, role: user.role },
+				process.env.SECRET,
+				{
+					expiresIn: "1h",
+				}
+			);
+			return res.status(200).json({ token, user });
 		} else throw Error("Invalid email/password combination");
 	} catch (err) {
 		return res.status(422).json({ error: err.message });
 	}
-};
-
-exports.authentication = (req, res) => {
-	const token = req.headers.authorization.split(" ")[1];
-	const payload = jwt.verify(token, process.env.SECRET);
-	req.user = payload;
-	next();
 };

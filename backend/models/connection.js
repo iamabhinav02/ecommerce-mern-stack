@@ -14,3 +14,4 @@ const connection = mongoose
 	});
 
 module.exports.User = require("./user");
+module.exports.Category = require("./category");
