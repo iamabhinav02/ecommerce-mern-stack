@@ -2,12 +2,10 @@ const express = require("express");
 const multer = require("multer");
 const shortid = require("shortid");
 const path = require("path");
-const {
-	addCategory,
-	getCategories,
-} = require("../../controllers/products/category");
+
+const { addProduct } = require("../../controllers/products/product");
+
 const { auth, adminRole } = require("../../middlewares");
-const router = express.Router();
 
 const storage = multer.diskStorage({
 	destination: (req, file, cb) => {
@@ -19,13 +17,16 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
+const router = express.Router();
+
 router.post(
-	"/category/create",
+	"/product/addproduct",
 	auth,
 	adminRole,
-	upload.single("image"),
-	addCategory
+	upload.array("image"),
+	addProduct
 );
-router.get("/category/getcategories", getCategories);
+
+// router.get("/category/getcategories", getCategories);
 
 module.exports = router;

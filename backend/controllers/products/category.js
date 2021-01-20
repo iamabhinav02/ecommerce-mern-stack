@@ -26,6 +26,9 @@ exports.addCategory = async (req, res) => {
 			name: req.body.name,
 			slug: slugify(req.body.name),
 		};
+		if (req.file)
+			categoryObject.image =
+				process.env.HOST + "/public/" + req.file.filename;
 		if (req.body.parentId) categoryObject.parentId = req.body.parentId;
 		const category = new db.Category(categoryObject);
 		const result = await category.save();

@@ -5,6 +5,7 @@ const connection = mongoose
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 		useCreateIndex: true,
+		useFindAndModify: false,
 	})
 	.then(() => {
 		console.log("Connection to database successful!!");
@@ -15,3 +16,5 @@ const connection = mongoose
 
 module.exports.User = require("./user");
 module.exports.Category = require("./category");
+module.exports.Product = require("./product");
+module.exports.Cart = require("./cart");
