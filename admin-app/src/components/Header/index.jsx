@@ -1,11 +1,55 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Navbar, Nav, Container } from "react-bootstrap";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../store/actions";
 
 const Header = props => {
+	const auth = useSelector(state => state.auth);
+	const dispatch = useDispatch();
+
+	const logoutUser = () => {
+		dispatch(logout());
+	};
+
+	const renderNonLoggedInLinks = () => {
+		return (
+			<Nav>
+				<li className="nav-item">
+					<Link to="/login" className="nav-link">
+						Login
+					</Link>
+				</li>
+				<li className="nav-item">
+					<Link to="/signup" className="nav-link">
+						Signup
+					</Link>
+				</li>
+			</Nav>
+		);
+	};
+
+	const renderLoggedInLinks = () => {
+		return (
+			<Nav>
+				<li className="nav-item">
+					<span className="nav-link" onClick={logoutUser}>
+						Logout
+					</span>
+				</li>
+			</Nav>
+		);
+	};
+
 	return (
-		<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-			<Container>
+		<Navbar
+			collapseOnSelect
+			expand="lg"
+			bg="dark"
+			variant="dark"
+			style={{ zIndex: 1 }}
+		>
+			<Container fluid>
 				<Link to="/" className="navbar-brand">
 					Admin Dashboard
 				</Link>
@@ -31,18 +75,9 @@ const Header = props => {
 							</NavDropdown.Item>
 						</NavDropdown> */}
 					</Nav>
-					<Nav>
-						<li className="nav-item">
-							<Link to="/login" className="nav-link">
-								Login
-							</Link>
-						</li>
-						<li className="nav-item">
-							<Link to="/signup" className="nav-link">
-								Signup
-							</Link>
-						</li>
-					</Nav>
+					{auth.authenticate
+						? renderLoggedInLinks()
+						: renderNonLoggedInLinks()}
 				</Navbar.Collapse>
 			</Container>
 		</Navbar>

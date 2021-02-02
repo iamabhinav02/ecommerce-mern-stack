@@ -27,9 +27,9 @@ exports.signup = async (req, res) => {
 exports.login = async (req, res) => {
 	try {
 		const { email, password } = req.body;
-		let user = await db.User.findOne({ email }).select("-password");
+		let user = await db.User.findOne({ email });
 		if (!user) throw Error("Invalid email/password combination");
-		const result = user.comparePassword(password);
+		const result = await user.comparePassword(password);
 		if (result && user.role === "admin") {
 			const token = jwt.sign(
 				{ _id: user._id, role: user.role },
@@ -38,9 +38,18 @@ exports.login = async (req, res) => {
 					expiresIn: "1h",
 				}
 			);
-			return res.status(200).json({ token, user });
+			const { role, email, firstName, lastName } = user;
+			res.cookie("token", token, { expiresIn: "1h" });
+			return res
+				.status(200)
+				.json({ token, user: { role, email, firstName, lastName } });
 		} else throw Error("Invalid email/password combination");
 	} catch (err) {
-		return res.status(422).json({ error: err.message });
+		return res.status(400).json({ error: err.message });
 	}
+};
+
+exports.signout = async (req, res) => {
+	res.clearCookie("token");
+	res.status(200).json({ message: "Signout successful!" });
 };

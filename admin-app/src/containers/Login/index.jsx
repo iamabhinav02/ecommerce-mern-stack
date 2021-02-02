@@ -1,23 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import Layout from "../../components/Layout";
 import Input from "../../components/UI/Inputs";
-import { login, isUserLoggedIn } from "../../store/actions";
+import { login } from "../../store/actions";
 
 const Login = () => {
 	const [Email, setEmail] = useState("");
 	const [Password, setPassword] = useState("");
+
 	const auth = useSelector(state => state.auth);
-
 	const dispatch = useDispatch();
-
-	useEffect(() => {
-		if (!auth.authenticate) {
-			dispatch(isUserLoggedIn());
-		}
-	}, []);
 
 	const userLogin = e => {
 		e.preventDefault();
