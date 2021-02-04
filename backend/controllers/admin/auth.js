@@ -35,11 +35,11 @@ exports.login = async (req, res) => {
 				{ _id: user._id, role: user.role },
 				process.env.SECRET,
 				{
-					expiresIn: "1h",
+					expiresIn: "1d",
 				}
 			);
 			const { role, email, firstName, lastName } = user;
-			res.cookie("token", token, { expiresIn: "1h" });
+			res.cookie("token", token, { expiresIn: "1d" });
 			return res
 				.status(200)
 				.json({ token, user: { role, email, firstName, lastName } });

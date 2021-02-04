@@ -45,7 +45,7 @@ const Signup = () => {
 		<Layout>
 			<Container>
 				{user.message}
-				<Row style={{ marginTop: "50px" }}>
+				<Row style={{ marginTop: "50px", paddingTop: "60px" }}>
 					<Col md={{ span: 6, offset: 3 }}>
 						<Form onSubmit={userSignup}>
 							<Row>

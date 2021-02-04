@@ -8,7 +8,8 @@ import Login from "./containers/Login";
 import Order from "./containers/Orders";
 import Product from "./containers/Products";
 import PrivateRoute from "./components/HOC/PrivateRoute";
-import { isUserLoggedIn } from "./store/actions";
+import { isUserLoggedIn, initialData } from "./store/actions";
+import Category from "./containers/Category";
 
 const App = () => {
 	const auth = useSelector(state => state.auth);
@@ -19,14 +20,16 @@ const App = () => {
 		if (!auth.authenticate) {
 			dispatch(isUserLoggedIn());
 		}
+		dispatch(initialData());
 	}, []);
 
 	return (
 		<div>
 			<Switch>
 				<PrivateRoute exact path="/" component={Home} />
-				<PrivateRoute path="/products" component={Product} />
-				<PrivateRoute path="/orders" component={Order} />
+				<PrivateRoute exact path="/products" component={Product} />
+				<PrivateRoute exact path="/orders" component={Order} />
+				<PrivateRoute exact path="/categories" component={Category} />
 				<Route exact path="/signup" component={Signup} />
 				<Route exact path="/login" component={Login} />
 			</Switch>

@@ -13,6 +13,7 @@ function createCategoryList(categories, parentId = null) {
 		result.push({
 			_id: cat._id,
 			name: cat.name,
+			parentId: cat.parentId,
 			slug: cat.slug,
 			children: createCategoryList(categories, cat._id),
 		});

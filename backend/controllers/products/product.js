@@ -28,13 +28,12 @@ exports.addProduct = async (req, res) => {
 	}
 };
 
-// exports.getCategories = async (req, res) => {
+// exports.getProducts = async (req, res) => {
 // 	try {
-// 		const categories = await db.Category.find({});
-// 		if (!categories) throw Error("Could not fetch all the categories");
+// 		const products = await db.Product.find({});
+// 		if (!products) throw Error("Could not fetch all the products");
 // 		else {
-// 			const categoryList = createCategoryList(categories);
-// 			return res.status(200).json({ categoryList });
+// 			return res.status(200).json({ products });
 // 		}
 // 	} catch (err) {
 // 		return res.status(400).json({ error: err.message });

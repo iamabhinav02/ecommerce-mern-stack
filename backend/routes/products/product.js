@@ -3,7 +3,10 @@ const multer = require("multer");
 const shortid = require("shortid");
 const path = require("path");
 
-const { addProduct } = require("../../controllers/products/product");
+const {
+	addProduct,
+	getProducts,
+} = require("../../controllers/products/product");
 
 const { auth, adminRole } = require("../../middlewares");
 
@@ -27,6 +30,6 @@ router.post(
 	addProduct
 );
 
-// router.get("/category/getcategories", getCategories);
+// router.get("/product/getproducts", getProducts);
 
 module.exports = router;

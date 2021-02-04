@@ -13,17 +13,25 @@ const Layout = props => {
 						<Col md={2} className="sidebar">
 							<ul>
 								<li>
-									<NavLink to="/">Home</NavLink>
+									<NavLink exact to="/">
+										Home
+									</NavLink>
 								</li>
 								<li>
 									<NavLink to="/orders">Orders</NavLink>
+								</li>
+								<li>
+									<NavLink to="/categories">Category</NavLink>
 								</li>
 								<li>
 									<NavLink to="/products">Products</NavLink>
 								</li>
 							</ul>
 						</Col>
-						<Col md={10} style={{ marginLeft: "auto" }}>
+						<Col
+							md={10}
+							style={{ marginLeft: "auto", paddingTop: "60px" }}
+						>
 							{props.children}
 						</Col>
 					</Row>

@@ -34,7 +34,7 @@ exports.login = async (req, res) => {
 				{ _id: user._id, role: user.role },
 				process.env.SECRET,
 				{
-					expiresIn: "1h",
+					expiresIn: "1d",
 				}
 			);
 			const { role, email, firstName, lastName } = user;
