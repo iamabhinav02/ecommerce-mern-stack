@@ -23,9 +23,9 @@ function createCategoryList(categories, parentId = null) {
 exports.fetchInitData = async (req, res) => {
 	try {
 		const categories = await db.Category.find({});
-		const products = await db.Product.find({}).select(
-			"_id name price quantity description category pictures"
-		);
+		const products = await db.Product.find({})
+			.select("_id name price quantity description category pictures")
+			.populate({ path: "category", select: "_id name" });
 		return res
 			.status(200)
 			.json({ categories: createCategoryList(categories), products });
