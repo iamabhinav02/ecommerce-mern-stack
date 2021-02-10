@@ -1,5 +1,6 @@
 const db = require("../../models/connection");
 const jwt = require("jsonwebtoken");
+const shortid = require("shortid");
 
 exports.signup = async (req, res) => {
 	try {
@@ -12,7 +13,7 @@ exports.signup = async (req, res) => {
 			email,
 			password,
 			contact,
-			username: Math.random().toString(),
+			username: shortid.generate(),
 		});
 		const result = await user.save();
 		if (result)
