@@ -1,15 +1,18 @@
+import React from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
-import Header from "./components/Header";
 import HomePage from "./containers/HomePage";
-import MenuHeader from "./components/MenuHeader";
+import ProductListPage from "./containers/ProductListPage";
 
-function App() {
+const App = () => {
 	return (
-		<div>
-			<Header />
-			<MenuHeader />
-		</div>
+		<BrowserRouter>
+			<Switch>
+				<Route exact path="/" component={HomePage} />
+				<Route exact path="/:slug" component={ProductListPage} />
+			</Switch>
+		</BrowserRouter>
 	);
-}
+};
 
 export default App;

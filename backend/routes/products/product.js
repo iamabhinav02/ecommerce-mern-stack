@@ -6,6 +6,7 @@ const path = require("path");
 const {
 	addProduct,
 	getProducts,
+	getProductsBySlug,
 } = require("../../controllers/products/product");
 
 const { auth, adminRole } = require("../../middlewares");
@@ -30,6 +31,8 @@ router.post(
 	addProduct
 );
 
-// router.get("/product/getproducts", getProducts);
+router.get("/product/getproducts", getProducts);
+
+router.get("/products/:slug", getProductsBySlug);
 
 module.exports = router;

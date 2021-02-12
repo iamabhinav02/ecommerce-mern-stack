@@ -208,7 +208,7 @@ const Product = () => {
 		form.append("description", description);
 		form.append("category", categoryId);
 		for (let pic of productPictures) {
-			form.append("pictures", pic);
+			form.append("image", pic);
 		}
 		dispatch(addProduct(form));
 	};

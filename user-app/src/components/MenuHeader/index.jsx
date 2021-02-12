@@ -19,12 +19,16 @@ const MenuHeader = () => {
 					{category.parentId ? (
 						<a href={category.slug}>{category.name}</a>
 					) : (
-						<span>
+						<span style={{ display: "flex" }}>
 							{category.name}{" "}
 							<span
-								style={{ fontWeight: "640", fontSize: "12px" }}
+								style={{
+									fontWeight: "640",
+									fontSize: "18px",
+									paddingLeft: "4px",
+								}}
 							>
-								v
+								&#9662;
 							</span>
 						</span>
 					)}
