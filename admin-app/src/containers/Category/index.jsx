@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import Layout from "../../components/Layout";
-import { createCategory } from "../../store/actions";
+import {
+	createCategory,
+	getAllCategory,
+	updateCategories,
+} from "../../store/actions";
 import Input from "../../components/UI/Inputs";
 import Modal from "../../components/UI/Modal";
 import CheckboxTree from "react-checkbox-tree";
@@ -34,6 +38,7 @@ const Category = () => {
 				label: category.name,
 				value: category._id,
 				children:
+					category.children &&
 					category.children.length > 0 &&
 					renderCategories(category.children),
 			});
@@ -55,7 +60,7 @@ const Category = () => {
 		return options;
 	};
 
-	const handleClose = () => {
+	const handleCreateCategoryClose = () => {
 		setShow(false);
 		const form = new FormData();
 		form.append("name", categoryName);
@@ -106,6 +111,30 @@ const Category = () => {
 
 	const handleShow = () => setShow(true);
 
+	const handleEditCategoryClose = () => {
+		const form = new FormData();
+		expandedArray.forEach(item => {
+			form.append("_id", item.value);
+			form.append("name", item.name);
+			form.append("parentId", item.parentId ? item.parentId : "");
+			form.append("type", item.type);
+		});
+		checkedArray.forEach(item => {
+			form.append("_id", item.value);
+			form.append("name", item.name);
+			form.append("parentId", item.parentId ? item.parentId : "");
+			form.append("type", item.type);
+		});
+		dispatch(updateCategories(form)).then(result => {
+			if (result) dispatch(getAllCategory());
+		});
+		setUpdateCategoryModal(false);
+		setExpanded([]);
+		setExpandedArray([]);
+		setCheckedArray([]);
+		setChecked([]);
+	};
+
 	return (
 		<Layout sidebar>
 			<Container>
@@ -124,7 +153,6 @@ const Category = () => {
 				</Row>
 				<Row>
 					<Col md={12}>
-						{/* <ul>{renderCategories(category.categories)}</ul> */}
 						<CheckboxTree
 							nodes={renderCategories(category.categories)}
 							checked={checked}
@@ -153,7 +181,7 @@ const Category = () => {
 
 			<Modal
 				show={show}
-				handleClose={handleClose}
+				handleClose={handleCreateCategoryClose}
 				title="Add new category"
 			>
 				<Input
@@ -185,7 +213,7 @@ const Category = () => {
 
 			<Modal
 				show={updateCategoryModal}
-				handleClose={() => setUpdateCategoryModal(false)}
+				handleClose={handleEditCategoryClose}
 				title="Edit categories"
 				size="lg"
 			>

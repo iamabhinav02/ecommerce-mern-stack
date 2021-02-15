@@ -52,3 +52,40 @@ exports.getCategories = async (req, res) => {
 		return res.status(400).json({ error: err.message });
 	}
 };
+
+exports.updateCategories = async (req, res) => {
+	try {
+		const { _id, name, type, parentId } = req.body;
+		if (name instanceof Array) {
+			const updatedCategories = [];
+			for (let i = 0; i < name.length; i++) {
+				const category = {
+					name: name[i],
+					type: type[i],
+				};
+				if (parentId[i] !== "") category.parentId = parentId[i];
+				const updatedCategory = await db.Category.findOneAndUpdate(
+					{ _id: _id[i] },
+					category,
+					{ new: true }
+				);
+				updatedCategories.push(updatedCategory);
+			}
+			res.status(201).json({ updatedCategories });
+		} else {
+			const category = {
+				name,
+				type,
+			};
+			if (parentId !== "") category.parentId = parentId;
+			const updatedCategory = await db.Category.findOneAndUpdate(
+				{ _id },
+				category,
+				{ new: true }
+			);
+			res.status(201).json({ updatedCategory });
+		}
+	} catch (err) {
+		res.status(400).json({ error: err.message });
+	}
+};

@@ -21,23 +21,19 @@ const buildNewCategory = (categories, category) => {
 	}
 	for (let cat of categories) {
 		if (cat._id === category.parentId) {
+			const newCategory = {
+				_id: category._id,
+				name: category.name,
+				slug: category.slug,
+				parentId: category.parentId,
+				children: category.children,
+			};
 			updatedCategoryList.push({
 				...cat,
-				children: cat.children
-					? buildNewCategory(
-							[
-								...cat.children,
-								{
-									_id: category._id,
-									name: category.name,
-									slug: category.slug,
-									parentId: category.parentId,
-									children: category.children,
-								},
-							],
-							category
-					  )
-					: [],
+				children:
+					cat.children.length > 0
+						? [...cat.children, newCategory]
+						: [newCategory],
 			});
 		} else {
 			updatedCategoryList.push({

@@ -5,8 +5,10 @@ const path = require("path");
 const {
 	addCategory,
 	getCategories,
+	updateCategories,
 } = require("../../controllers/products/category");
 const { auth, adminRole } = require("../../middlewares");
+
 const router = express.Router();
 
 const storage = multer.diskStorage({
@@ -17,6 +19,7 @@ const storage = multer.diskStorage({
 		cb(null, shortid.generate() + "-" + file.originalname);
 	},
 });
+
 const upload = multer({ storage });
 
 router.post(
@@ -27,5 +30,7 @@ router.post(
 	addCategory
 );
 router.get("/category/getcategories", getCategories);
+
+router.post("/category/update", upload.array("image"), updateCategories);
 
 module.exports = router;
