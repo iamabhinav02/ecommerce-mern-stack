@@ -10,6 +10,7 @@ import Product from "./containers/Products";
 import PrivateRoute from "./components/HOC/PrivateRoute";
 import { isUserLoggedIn, initialData } from "./store/actions";
 import Category from "./containers/Category";
+import Page from "./containers/Page";
 
 const App = () => {
 	const auth = useSelector(state => state.auth);
@@ -27,6 +28,7 @@ const App = () => {
 		<div>
 			<Switch>
 				<PrivateRoute exact path="/" component={Home} />
+				<PrivateRoute exact path="/page" component={Page} />
 				<PrivateRoute exact path="/products" component={Product} />
 				<PrivateRoute exact path="/orders" component={Order} />
 				<PrivateRoute exact path="/categories" component={Category} />

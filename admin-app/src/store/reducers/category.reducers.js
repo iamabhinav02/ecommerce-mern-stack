@@ -78,6 +78,45 @@ export default (state = initialState, action) => {
 		case categoryConstants.CREATE_CATEGORY_FAILURE:
 			state = {
 				...initialState,
+				error: action.payload.error,
+			};
+			break;
+		case categoryConstants.UPDATE_CATEGORY_REQUEST:
+			state = {
+				...state,
+				loading: true,
+			};
+			break;
+		case categoryConstants.UPDATE_CATEGORY_SUCCESS:
+			state = {
+				...state,
+				loading: false,
+			};
+			break;
+		case categoryConstants.UPDATE_CATEGORY_FAILURE:
+			state = {
+				...state,
+				error: action.payload.error,
+				loading: false,
+			};
+			break;
+		case categoryConstants.DELETE_CATEGORY_REQUEST:
+			state = {
+				...state,
+				loading: true,
+			};
+			break;
+		case categoryConstants.DELETE_CATEGORY_SUCCESS:
+			state = {
+				...state,
+				loading: false,
+			};
+			break;
+		case categoryConstants.DELETE_CATEGORY_FAILURE:
+			state = {
+				...state,
+				error: action.payload.error,
+				loading: false,
 			};
 			break;
 	}

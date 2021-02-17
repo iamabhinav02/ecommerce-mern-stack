@@ -56,6 +56,7 @@ const Category = () => {
 				value: category._id,
 				name: category.name,
 				parentId: category.parentId,
+				type: category.type,
 			});
 			if (category.children) {
 				createCategoryList(category.children, options);
@@ -133,9 +134,7 @@ const Category = () => {
 			form.append("parentId", item.parentId ? item.parentId : "");
 			form.append("type", item.type);
 		});
-		dispatch(updateCategories(form)).then(result => {
-			if (result) dispatch(getAllCategory());
-		});
+		dispatch(updateCategories(form));
 		setUpdateCategoryModal(false);
 	};
 
@@ -150,22 +149,16 @@ const Category = () => {
 				_id: item.value,
 			};
 		});
-
 		// const expandedIds = expandedArray.map(item => {
 		// 	return {
 		// 		_id: item.value,
 		// 	};
 		// });
 		// const ids = expandedIds.concat(checkedIds);
-
 		if (checkedIds.length > 0) {
-			dispatch(deleteCategories(checkedIds)).then(result => {
-				if (result) {
-					dispatch(getAllCategory());
-					setDeleteCategoryModal(false);
-				}
-			});
+			dispatch(deleteCategories(checkedIds));
 		}
+		setDeleteCategoryModal(false);
 	};
 
 	return (
