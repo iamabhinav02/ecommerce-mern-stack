@@ -6,6 +6,7 @@ const {
 	addCategory,
 	getCategories,
 	updateCategories,
+	deleteCategories,
 } = require("../../controllers/products/category");
 const { auth, adminRole } = require("../../middlewares");
 
@@ -32,5 +33,6 @@ router.post(
 router.get("/category/getcategories", getCategories);
 
 router.post("/category/update", upload.array("image"), updateCategories);
+router.post("/category/delete", deleteCategories);
 
 module.exports = router;

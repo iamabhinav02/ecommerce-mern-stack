@@ -9,9 +9,30 @@ const NewModal = props => {
 			</Modal.Header>
 			<Modal.Body>{props.children}</Modal.Body>
 			<Modal.Footer>
-				<Button variant="primary" onClick={props.handleClose}>
-					Save Changes
-				</Button>
+				{props.buttons ? (
+					props.buttons.map((btn, index) => {
+						return (
+							<Button
+								key={index + 1}
+								variant={btn.color}
+								onClick={btn.onClick}
+								{...props}
+								className="btn-sm"
+							>
+								{btn.label}
+							</Button>
+						);
+					})
+				) : (
+					<Button
+						variant="primary"
+						{...props}
+						className="btn-sm"
+						onClick={props.handleClose}
+					>
+						Save
+					</Button>
+				)}
 			</Modal.Footer>
 		</Modal>
 	);

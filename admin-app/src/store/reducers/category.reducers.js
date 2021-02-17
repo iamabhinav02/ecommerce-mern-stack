@@ -6,29 +6,31 @@ const initialState = {
 	error: null,
 };
 
-const buildNewCategory = (categories, category) => {
-	let updatedCategoryList = [];
-	if (!category.parentId) {
+const buildNewCategories = (parentId, categories, category) => {
+	let myCategories = [];
+	if (parentId == undefined) {
 		return [
 			...categories,
 			{
 				_id: category._id,
 				name: category.name,
 				slug: category.slug,
+				type: category.type,
 				children: [],
 			},
 		];
 	}
 	for (let cat of categories) {
-		if (cat._id === category.parentId) {
+		if (cat._id == parentId) {
 			const newCategory = {
 				_id: category._id,
 				name: category.name,
 				slug: category.slug,
 				parentId: category.parentId,
-				children: category.children,
+				type: category.type,
+				children: [],
 			};
-			updatedCategoryList.push({
+			myCategories.push({
 				...cat,
 				children:
 					cat.children.length > 0
@@ -36,15 +38,15 @@ const buildNewCategory = (categories, category) => {
 						: [newCategory],
 			});
 		} else {
-			updatedCategoryList.push({
+			myCategories.push({
 				...cat,
 				children: cat.children
-					? buildNewCategory(cat.children, category)
+					? buildNewCategories(parentId, cat.children, category)
 					: [],
 			});
 		}
 	}
-	return updatedCategoryList;
+	return myCategories;
 };
 
 export default (state = initialState, action) => {
@@ -62,7 +64,8 @@ export default (state = initialState, action) => {
 			};
 			break;
 		case categoryConstants.CREATE_CATEGORY_SUCCESS:
-			const updatedCategory = buildNewCategory(
+			const updatedCategory = buildNewCategories(
+				action.payload.category.parentId,
 				state.categories,
 				action.payload.category
 			);
