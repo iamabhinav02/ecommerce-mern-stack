@@ -33,7 +33,11 @@ const Header = props => {
 		return (
 			<Nav>
 				<li className="nav-item">
-					<span className="nav-link" onClick={logoutUser}>
+					<span
+						className="nav-link"
+						onClick={logoutUser}
+						style={{ cursor: "pointer" }}
+					>
 						Logout
 					</span>
 				</li>

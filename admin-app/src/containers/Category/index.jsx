@@ -205,7 +205,8 @@ const Category = () => {
 
 			<AddCategory
 				show={show}
-				handleClose={handleCreateCategoryClose}
+				handleClose={() => setShow(false)}
+				onSubmit={handleCreateCategoryClose}
 				title="Add new category"
 				categoryName={categoryName}
 				setCategoryName={setCategoryName}
@@ -219,7 +220,8 @@ const Category = () => {
 
 			<UpdateCategory
 				show={updateCategoryModal}
-				handleClose={handleEditCategoryClose}
+				handleClose={() => setUpdateCategoryModal(false)}
+				onSubmit={handleEditCategoryClose}
 				title="Edit categories"
 				size="lg"
 				expandedArray={expandedArray}

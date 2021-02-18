@@ -21,8 +21,10 @@ const App = () => {
 		if (!auth.authenticate) {
 			dispatch(isUserLoggedIn());
 		}
-		dispatch(initialData());
-	}, []);
+		if (auth.authenticate) {
+			dispatch(initialData());
+		}
+	}, [auth.authenticate]);
 
 	return (
 		<div>

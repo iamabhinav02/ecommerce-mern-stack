@@ -79,6 +79,7 @@ export default (state = initialState, action) => {
 			state = {
 				...initialState,
 				error: action.payload.error,
+				loading: false,
 			};
 			break;
 		case categoryConstants.UPDATE_CATEGORY_REQUEST:

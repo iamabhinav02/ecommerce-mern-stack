@@ -1,4 +1,7 @@
 const jwt = require("jsonwebtoken");
+const multer = require("multer");
+const shortid = require("shortid");
+const path = require("path");
 
 exports.auth = (req, res, next) => {
 	if (!req.headers.authorization) {
@@ -21,3 +24,14 @@ exports.userRole = (req, res, next) => {
 		return res.status(400).json({ error: "User access denied" });
 	next();
 };
+
+const storage = multer.diskStorage({
+	destination: (req, file, cb) => {
+		cb(null, path.join(path.dirname(__dirname), "uploads"));
+	},
+	filename: (req, file, cb) => {
+		cb(null, shortid.generate() + "-" + file.originalname);
+	},
+});
+
+exports.upload = multer({ storage });

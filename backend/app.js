@@ -6,6 +6,7 @@ const userAuth = require("./routes/user/auth");
 const cart = require("./routes/user/cart");
 const adminAuth = require("./routes/admin/auth");
 const initData = require("./routes/admin/init");
+const page = require("./routes/admin/page");
 const category = require("./routes/products/category");
 const product = require("./routes/products/product");
 
@@ -20,6 +21,7 @@ app.use("/api", adminAuth);
 app.use("/api", initData);
 app.use("/api", category);
 app.use("/api", product);
+app.use("/api", page);
 
 app.listen(process.env.PORT, () => {
 	console.log(`Server running on PORT ${process.env.PORT}...`);

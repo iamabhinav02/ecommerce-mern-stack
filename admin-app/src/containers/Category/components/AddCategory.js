@@ -14,10 +14,16 @@ const AddCategory = props => {
 		setParentID,
 		categoryList,
 		setCategoryImage,
+		onSubmit,
 	} = props;
 
 	return (
-		<Modal show={show} handleClose={handleClose} title={title}>
+		<Modal
+			show={show}
+			handleClose={handleClose}
+			title={title}
+			onSubmit={onSubmit}
+		>
 			<Row>
 				<Col>
 					<Input
@@ -29,18 +35,13 @@ const AddCategory = props => {
 					/>
 				</Col>
 				<Col>
-					<select
-						className="form-control form-control-sm"
+					<Input
+						type="select"
+						placeholder="Select Category"
 						value={parentID}
 						onChange={e => setParentID(e.target.value)}
-					>
-						<option>Select category</option>
-						{categoryList.map(option => (
-							<option key={option.value} value={option.value}>
-								{option.name}
-							</option>
-						))}
-					</select>
+						options={categoryList}
+					/>
 				</Col>
 			</Row>
 			<Row>

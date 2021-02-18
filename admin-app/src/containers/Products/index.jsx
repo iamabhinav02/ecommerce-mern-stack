@@ -73,7 +73,8 @@ const Product = () => {
 		return (
 			<Modal
 				show={show}
-				handleClose={handleClose}
+				handleClose={() => setShow(false)}
+				onSubmit={handleClose}
 				title="Add new product"
 			>
 				<Input
@@ -100,18 +101,13 @@ const Product = () => {
 					onChange={e => setDescription(e.target.value)}
 					placeholder="Description"
 				/>
-				<select
-					className="form-control"
+				<Input
+					type="select"
 					value={categoryId}
 					onChange={e => setCategoryId(e.target.value)}
-				>
-					<option>Select category</option>
-					{createCategoryList(category.categories).map(option => (
-						<option key={option.value} value={option.value}>
-							{option.name}
-						</option>
-					))}
-				</select>
+					options={createCategoryList(category.categories)}
+					placeholder="Select Category"
+				/>
 				{productPictures &&
 					productPictures.map((pic, index) => (
 						<div key={index}>{pic.name}</div>

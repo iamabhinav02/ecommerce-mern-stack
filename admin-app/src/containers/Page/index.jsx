@@ -2,30 +2,64 @@ import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout";
 import Input from "../../components/UI/Inputs";
 import Modal from "../../components/UI/Modal";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import linearCategories from "../../helpers/linearCategories";
+import { createPage } from "../../store/actions";
 import { Row, Col, Button } from "react-bootstrap";
 
-const Page = props => {
+const Page = () => {
 	const [title, setTitle] = useState("");
 	const [createModal, setCreateModal] = useState(false);
 	const [categories, setCategories] = useState([]);
 	const [categoryId, setCategoryId] = useState("");
 	const [desc, setDesc] = useState("");
+	const [type, setType] = useState("");
 	const [banners, setBanners] = useState([]);
 	const [products, setProducts] = useState([]);
+
 	const category = useSelector(state => state.category);
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		setCategories(linearCategories(category.categories));
 	}, [category]);
 
 	const handleBannerImages = e => {
-		console.log(e);
+		setBanners([...banners, e.target.files[0]]);
 	};
 
 	const handleProductImages = e => {
-		console.log(e);
+		setProducts([...products, e.target.files[0]]);
+	};
+
+	const onCategoryChange = e => {
+		const cat = categories.find(
+			category => category.value == e.target.value
+		);
+		setCategoryId(e.target.value);
+		setType(cat.type);
+	};
+
+	const createPageForm = () => {
+		const form = new FormData();
+		form.append("title", title);
+		form.append("description", desc);
+		form.append("category", categoryId);
+		form.append("type", type);
+		banners.forEach(banner => {
+			form.append("banners", banner);
+		});
+		products.forEach(product => {
+			form.append("products", product);
+		});
+		dispatch(createPage(form));
+		setCreateModal(false);
+		setTitle("");
+		setCategoryId("");
+		setBanners([]);
+		setProducts([]);
+		setDesc("");
+		setType("");
 	};
 
 	const renderCreatePageModal = () => {
@@ -34,23 +68,17 @@ const Page = props => {
 				show={createModal}
 				title="Create New Page"
 				handleClose={() => setCreateModal(false)}
+				onSubmit={createPageForm}
 			>
 				<Row>
 					<Col>
-						<select
-							className="form-control form-control-sm"
+						<Input
+							type="select"
 							value={categoryId}
-							onChange={e => setCategoryId(e.target.value)}
-						>
-							<option value="">Select Category</option>
-							{categories.map((item, index) => {
-								return (
-									<option key={index + 1} value={item._id}>
-										{item.name}
-									</option>
-								);
-							})}
-						</select>
+							onChange={onCategoryChange}
+							placeholder="Select Category"
+							options={categories}
+						/>
 					</Col>
 				</Row>
 				<Row>
@@ -73,6 +101,12 @@ const Page = props => {
 						/>
 					</Col>
 				</Row>
+				{banners.length > 0 &&
+					banners.map((banner, index) => (
+						<Row key={index + 1}>
+							<Col>{banner.item}</Col>
+						</Row>
+					))}
 				<Row>
 					<Col>
 						<Input
@@ -82,6 +116,12 @@ const Page = props => {
 						/>
 					</Col>
 				</Row>
+				{products.length > 0 &&
+					products.map((product, index) => (
+						<Row key={index + 1}>
+							<Col>{product.item}</Col>
+						</Row>
+					))}
 				<Row>
 					<Col>
 						<Input

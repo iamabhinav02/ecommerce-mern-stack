@@ -13,10 +13,17 @@ const UpdateCategory = props => {
 		checkedArray,
 		categoryList,
 		handleCategoryInput,
+		onSubmit,
 	} = props;
 
 	return (
-		<Modal show={show} handleClose={handleClose} title={title} size={size}>
+		<Modal
+			show={show}
+			handleClose={handleClose}
+			title={title}
+			size={size}
+			onSubmit={onSubmit}
+		>
 			<Row>
 				<Col>
 					<h6>Expanded</h6>
@@ -41,8 +48,8 @@ const UpdateCategory = props => {
 							/>
 						</Col>
 						<Col>
-							<select
-								className="form-control"
+							<Input
+								type="select"
 								value={item.parentId}
 								onChange={e =>
 									handleCategoryInput(
@@ -52,21 +59,13 @@ const UpdateCategory = props => {
 										"expanded"
 									)
 								}
-							>
-								<option>Select category</option>
-								{categoryList.map(option => (
-									<option
-										key={option.value}
-										value={option.value}
-									>
-										{option.name}
-									</option>
-								))}
-							</select>
+								options={categoryList}
+								placeholder="Select Category"
+							/>
 						</Col>
 						<Col>
-							<select
-								className="form-control"
+							<Input
+								type="select"
 								value={item.type}
 								onChange={e =>
 									handleCategoryInput(
@@ -76,12 +75,9 @@ const UpdateCategory = props => {
 										"expanded"
 									)
 								}
-							>
-								<option value="">Select Type</option>
-								<option value="store">Store</option>
-								<option value="product">Product</option>
-								<option value="page">Page</option>
-							</select>
+								placeholder="Select Type"
+								options={[]}
+							/>
 						</Col>
 					</Row>
 				))}
@@ -109,8 +105,8 @@ const UpdateCategory = props => {
 							/>
 						</Col>
 						<Col>
-							<select
-								className="form-control"
+							<Input
+								type="select"
 								value={item.parentId}
 								onChange={e =>
 									handleCategoryInput(
@@ -120,21 +116,13 @@ const UpdateCategory = props => {
 										"checked"
 									)
 								}
-							>
-								<option>Select category</option>
-								{categoryList.map(option => (
-									<option
-										key={option.value}
-										value={option.value}
-									>
-										{option.name}
-									</option>
-								))}
-							</select>
+								options={categoryList}
+								placeholder="Select Category"
+							/>
 						</Col>
 						<Col>
-							<select
-								className="form-control"
+							<Input
+								type="select"
 								value={item.type}
 								onChange={e =>
 									handleCategoryInput(
@@ -144,12 +132,9 @@ const UpdateCategory = props => {
 										"checked"
 									)
 								}
-							>
-								<option value="">Select Type</option>
-								<option value="store">Store</option>
-								<option value="product">Product</option>
-								<option value="page">Page</option>
-							</select>
+								options={[]}
+								placeholder="Select Type"
+							/>
 						</Col>
 					</Row>
 				))}
