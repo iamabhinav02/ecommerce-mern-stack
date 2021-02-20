@@ -9,6 +9,9 @@ const initialState = {
 		under15k: [],
 		under20k: [],
 	},
+	pageReq: false,
+	error: null,
+	page: {},
 };
 
 export default (state = initialState, action) => {
@@ -33,6 +36,25 @@ export default (state = initialState, action) => {
 		case productConstants.GET_PRODUCTS_BY_SLUG_FAILURE:
 			state = {
 				...initialState,
+			};
+			break;
+		case productConstants.GET_PRODUCT_PAGE_REQUEST:
+			state = {
+				...initialState,
+				pageReq: true,
+			};
+			break;
+		case productConstants.GET_PRODUCT_PAGE_SUCCESS:
+			state = {
+				...state,
+				pageReq: false,
+				page: action.payload.page,
+			};
+			break;
+		case productConstants.GET_PRODUCT_PAGE_FAILURE:
+			state = {
+				...initialState,
+				error: action.payload.error,
 			};
 			break;
 	}
